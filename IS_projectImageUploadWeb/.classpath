@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="IB_Project_Shell/src/main/java"/>
+	<classpathentry kind="src" path="IB_Project_Shell/src/test/java"/>
+	<classpathentry kind="lib" path="__MACOSX/IB_Project_Shell/.mvn/wrapper/._maven-wrapper.jar"/>
+	<classpathentry kind="lib" path="IB_Project_Shell/.mvn/wrapper/maven-wrapper.jar"/>
+	<classpathentry kind="output" path="IB_Project_Shell/target/classes"/>
+</classpath>
