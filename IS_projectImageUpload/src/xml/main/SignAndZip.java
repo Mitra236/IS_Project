@@ -29,7 +29,6 @@ import java.util.Date;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.FactoryConfigurationError;
@@ -43,6 +42,9 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.apache.xml.security.exceptions.XMLSecurityException;
+import org.apache.xml.security.keys.KeyInfo;
+import org.apache.xml.security.keys.keyresolver.implementations.RSAKeyValueResolver;
+import org.apache.xml.security.keys.keyresolver.implementations.X509CertificateResolver;
 import org.apache.xml.security.signature.XMLSignature;
 import org.apache.xml.security.signature.XMLSignatureException;
 import org.apache.xml.security.transforms.TransformationException;
@@ -52,14 +54,15 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 
 
 public class SignAndZip {
 	
-	private static final String IN_DOC = "C:\\Users\\mitra\\Desktop\\images.xml";
-	private static final String OUT_DOC = "C:\\Users\\mitra\\Desktop\\images_signed.xml";
+	private static final String IN_DOC = "C:\\Users\\tehnocentar\\Desktop\\images.xml";
+	private static final String OUT_DOC = "C:\\Users\\tehnocentar\\Desktop\\images_signed.xml";
 	private static final String KEY_STORE_FILE = "./data/batman.jks";
 	public static ArrayList<File> directory = new ArrayList<>();
 
@@ -79,6 +82,11 @@ public class SignAndZip {
 			GetImages();
 			createXMLDocument(directory);
 			
+			
+			
+			
+			
+			
 			try {
 				zipIt();
 			} catch (IOException e) {
@@ -86,8 +94,13 @@ public class SignAndZip {
 				e.printStackTrace();
 			}
 			
-			Document document = loadDocument(IN_DOC);
 			
+			
+			
+			
+			
+			
+			Document document = loadDocument(IN_DOC);
 			PrivateKey pk = loadPrivateKey();
 			
 			Certificate cert = loadCertificate();
@@ -371,8 +384,15 @@ public class SignAndZip {
 
 		}
 		
+		
+		
+		
+		
+		
+		
+		
 		public static void zipIt() throws IOException {
-			FileOutputStream fos = new FileOutputStream("C:\\Users\\mitra\\Desktop\\images.zip");
+			FileOutputStream fos = new FileOutputStream("C:\\Users\\tehnocentar\\Desktop\\images.zip");
 			ZipOutputStream zipOut = new ZipOutputStream(fos);
 			
 			for (File file : directory) {
