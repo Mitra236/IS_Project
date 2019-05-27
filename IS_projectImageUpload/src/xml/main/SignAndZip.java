@@ -1,8 +1,6 @@
 package xml.main;
 
 
-
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -95,21 +93,23 @@ public class SignAndZip {
 			}
 			
 			
-			
-			
-			
-			
-			
 			Document document = loadDocument(IN_DOC);
-			PrivateKey pk = loadPrivateKey();
 			
+			PrivateKey pk = loadPrivateKey();	
 			Certificate cert = loadCertificate();
 			
 			System.out.println("Signing document....");
 			document = signDocument(document, pk, cert);
-
+			
+			boolean verify=verifySignature(document);
+			System.out.println("Verify signature... " + verify);
+			
+			
 			saveDocument(document, OUT_DOC);
 			System.out.println("Signing of document done");
+			
+			
+			
 		}
 		
 
@@ -382,6 +382,47 @@ public class SignAndZip {
 			    }
 			}
 
+		}
+		
+		private boolean verifySignature(Document doc) {
+			try {
+				NodeList signatures = doc.getElementsByTagNameNS("http://www.w3.org/2000/09/xmldsig#", "Signature");
+				Element signatureEl = (Element) signatures.item(0);
+				
+				XMLSignature signature = new XMLSignature(signatureEl, null);
+				
+			
+				KeyInfo keyInfo = signature.getKeyInfo();
+				if(keyInfo != null) {
+					
+					keyInfo.registerInternalKeyResolver(new RSAKeyValueResolver());
+				    keyInfo.registerInternalKeyResolver(new X509CertificateResolver());
+				    
+				   
+				    if(keyInfo.containsX509Data() && keyInfo.itemX509Data(0).containsCertificate()) { 
+				        Certificate cert = keyInfo.itemX509Data(0).itemCertificate(0).getX509Certificate();
+				        
+				        
+				        if(cert != null) 
+				        	return signature.checkSignatureValue((X509Certificate) cert);
+				        else
+				        	return false;
+				    }
+				    else
+				    	return false;
+				}
+				else
+					return false;
+		
+			}catch (XMLSignatureException e) {
+				e.printStackTrace();
+				return false;
+			} catch (XMLSecurityException e) {
+				e.printStackTrace();
+				return false;
+			}
+			
+			
 		}
 		
 		
