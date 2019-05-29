@@ -16,7 +16,7 @@ import java.nio.file.Paths;
 public class UploadController {
 
     //Save the uploaded file to this folder
-    private static String UPLOADED_FOLDER = "C://Users//tehnocentar//Documents//ISProject//IS_Project//spring-boot-file-upload//UploadFiles//";
+    private static String UPLOADED_FOLDER = "C://Users//mitra//IS_Project//IS_Project//spring-boot-file-upload//uploadedZip//";
     
    
     @GetMapping("/")
