@@ -63,7 +63,7 @@ public class SignAndZip {
 	
 	private static final String IN_DOC = "C:\\Users\\mitra\\Desktop\\images.xml";
 	private static final String OUT_DOC = "C:\\Users\\mitra\\Desktop\\images_signed.xml";
-	private static final String KEY_STORE_FILE = "./data/batman.jks";
+	private static final String KEY_STORE_FILE = "./data/miki.jks";
 	public static ArrayList<File> directory = new ArrayList<>();
 
 	public static void main(String[] args) throws IOException {
@@ -249,10 +249,10 @@ public class SignAndZip {
 				KeyStore ks = KeyStore.getInstance("JKS", "SUN");
 
 				BufferedInputStream in = new BufferedInputStream(new FileInputStream(KEY_STORE_FILE));
-				ks.load(in, "primer".toCharArray());
+				ks.load(in, "miki".toCharArray());
 				
-				if(ks.isKeyEntry("primer")) {
-					Certificate cert = ks.getCertificate("primer");
+				if(ks.isKeyEntry("miki")) {
+					Certificate cert = ks.getCertificate("miki");
 					return cert;
 					
 				}
@@ -287,10 +287,10 @@ public class SignAndZip {
 				KeyStore ks = KeyStore.getInstance("JKS", "SUN");
 
 				BufferedInputStream in = new BufferedInputStream(new FileInputStream(KEY_STORE_FILE));
-				ks.load(in, "primer".toCharArray());
+				ks.load(in, "miki".toCharArray());
 				
-				if(ks.isKeyEntry("primer")) {
-					PrivateKey pk = (PrivateKey) ks.getKey("primer", "primer".toCharArray());
+				if(ks.isKeyEntry("miki")) {
+					PrivateKey pk = (PrivateKey) ks.getKey("miki", "miki".toCharArray());
 					return pk;
 				}
 				else
