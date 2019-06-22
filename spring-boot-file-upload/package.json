@@ -1,0 +1,23 @@
+{
+  "name": "file",
+  "version": "1.0.0",
+  "description": "json file",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "http-server": "^0.11.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mitra236/IS_Project.git"
+  },
+  "author": "miki",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mitra236/IS_Project/issues"
+  },
+  "homepage": "https://github.com/Mitra236/IS_Project#readme"
+}
