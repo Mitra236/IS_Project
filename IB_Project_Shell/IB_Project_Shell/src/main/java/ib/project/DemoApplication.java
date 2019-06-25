@@ -1,18 +1,18 @@
-package com.demo;
+package ib.project;
 
+import java.io.File;
 import java.util.ResourceBundle;
-
 import org.apache.coyote.http11.AbstractHttp11Protocol;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.embedded.tomcat.TomcatConnectorCustomizer;
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.boot.context.embedded.tomcat.TomcatConnectorCustomizer;
+
+import ib.project.rest.DemoController;
 
 @SpringBootApplication
-@ComponentScan("com.demo.service")
-public class SpringBootWebApplication {
+public class DemoApplication {
 
 	private static String DATA_DIR_PATH;
 	
@@ -20,16 +20,14 @@ public class SpringBootWebApplication {
 		ResourceBundle rb = ResourceBundle.getBundle("application");
 		DATA_DIR_PATH = rb.getString("dataDir");
 	}
-   
-
-    public static void main(String[] args) throws Exception {
-        SpringApplication.run(SpringBootWebApplication.class, args);
-        
-     //   new File(DemoController.class.getProtectionDomain().getCodeSource().getLocation().getPath() + File.separator + DATA_DIR_PATH).mkdirs();
-    }
-
-   
-    @Bean
+	
+	public static void main(String[] args) {
+		SpringApplication.run(DemoApplication.class, args);
+		new File(DemoController.class.getProtectionDomain().getCodeSource().getLocation().getPath() + File.separator + DATA_DIR_PATH).mkdirs();
+	}
+	
+	
+	@Bean
     public TomcatEmbeddedServletContainerFactory tomcatEmbedded() {
 
         TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
@@ -43,5 +41,5 @@ public class SpringBootWebApplication {
         return tomcat;
 
     }
-
 }
+ 

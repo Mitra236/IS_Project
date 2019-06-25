@@ -56,7 +56,7 @@ function register(){
 	$.ajax({
 		type: 'POST',
         contentType: 'application/json',
-        url: 'https://localhost:8080/api/users/register',
+        url: 'https://localhost:8443/api/users/register',
         data: JSON.stringify(data),
         dataType: 'json',
         crossDomain: true,
