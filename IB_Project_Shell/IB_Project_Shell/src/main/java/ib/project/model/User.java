@@ -1,5 +1,11 @@
 package ib.project.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,7 +23,7 @@ import javax.persistence.JoinColumn;
 
 @Entity
 @Table(name="users")
-public class User {
+public class User implements Serializable, UserDetails {
 	
 	@Id
 	@Column(name="id")
@@ -42,9 +48,9 @@ public class User {
 			joinColumns=@JoinColumn(name="user_id",referencedColumnName="id"),
 			inverseJoinColumns = @JoinColumn(name="authority_id",referencedColumnName="id"))
 	private Set<Authority> user_authorities = new HashSet<>();
-	
-	
-	
+
+
+
 	public Long getId() {
 		return id;
 	}
@@ -77,6 +83,7 @@ public class User {
 		this.certificate = certificate;
 	}
 
+
 	public boolean isActive() {
 		return active;
 	}
@@ -86,12 +93,49 @@ public class User {
 	}
 
 	@Override
-	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", password=" + password + ", certificate=" + certificate
-				+ ", active=" + active + "]";
+	public boolean isEnabled() {
+		return this.active;
 	}
-	
-	
-	
+
+
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.user_authorities;
+	}
+
+
+
+	public Set<Authority> getUser_authorities() {
+		return user_authorities;
+	}
+
+	public void setUser_authorities(Set<Authority> user_authorities) {
+		this.user_authorities = user_authorities;
+	}
+
+	@Override
+	public String getUsername() {
+
+		return this.email;
+	}
+
+	@JsonIgnore
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@JsonIgnore
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@JsonIgnore
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
 
 }

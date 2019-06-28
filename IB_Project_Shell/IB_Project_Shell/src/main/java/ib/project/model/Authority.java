@@ -1,5 +1,7 @@
 package ib.project.model;
 
+import org.springframework.security.core.GrantedAuthority;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="authority")
-public class Authority {
+public class Authority implements GrantedAuthority {
 
 	@Id
 	@Column(name="id")
@@ -18,6 +20,11 @@ public class Authority {
 	
 	@Column(name="name")
 	String name;
+
+	@Override
+	public String getAuthority() {
+		return name;
+	}
 
 	public Long getId() {
 		return id;
@@ -34,10 +41,4 @@ public class Authority {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
-	
-	
-	
-	
 }
