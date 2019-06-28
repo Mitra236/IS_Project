@@ -65,6 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 .authorizeRequests()
                 //svim korisnicima dopusti da pristupe putanjama /auth/**
                 .antMatchers("/api/auth/**").permitAll()
+                .antMatchers("/api/demo/**").permitAll()
                 .antMatchers("/api/users/register").permitAll()
                 .antMatchers("/api/users/activate/**").hasAuthority("ADMIN")
                 //svaki zahtev mora biti autorizovan

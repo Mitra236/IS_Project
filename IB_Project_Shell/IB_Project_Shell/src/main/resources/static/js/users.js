@@ -68,6 +68,7 @@ function fillInactiveTable(){
 		}
 	});
 }
+
 function tableHeader(){
 	var table =  $('#myTable');
 	table.empty();
@@ -76,14 +77,12 @@ function tableHeader(){
 				'<th><button onclick="fillTable()" class="btn btn-default">Refresh</button></th>'+
 				'</tr>'+
 				'<tr>'+
-					'<th><input id="paramActive" type="text" placeholder="Search" ></th>'+
-					'<th><button onclick="searchActive()" class="btn btn-default">Submit</button</th>'+
-				'</tr>'+
-				'<tr>'+
 					'<th>Email</th>'+
 					'<th>Download</th>'+
 				'</tr>');
 }
+
+
 function tableInactiveHeader(){
 	var table =  $('#myInactiveTable');
 	table.empty();
@@ -91,73 +90,13 @@ function tableInactiveHeader(){
 				'<th>Inactive Users</th>'+
 				'<th><button onclick="fillInactiveTable()" class="btn btn-default">Refresh</button></th>'+
 				'</tr>'+
-				'<tr>'+
-					'<th><input id="paramInctive" type="text" placeholder="Search"></th>'+
-					'<th><button onclick="searchInactive()" class="btn btn-default">Submit</button</th>'+
-				'</tr>'+
+
 				'<tr>'+
 					'<th>Email</th>'+
 					'<th>Acivate</th>'+
 				'</tr>');
 }
-function searchActive(){
-	var token = localStorage.getItem("token");
-	var param = $('#paramActive').val().trim();
-	if(param==""){
-		return;
-	}
-	tableHeader();
-	$.ajax({
-		url:'http://localhost:8443/api/users/search_active/'+param,
-		headers:{Authorization:"Bearer " + token},
-		type: 'GET',
-		dataType:'json',
-		crossDomain: true,
-		success:function(response){
-			for(var i=0; i<response.length; i++) {
-				var table =  $('#myTable');
-				user = response[i];
-				console.log(user.email);
-				table.append('<tr>'+
-								'<td>'+user.email+'</td>'+
-								'<td><button class="btn btn-default">Download</button></td>'+
-							'</tr>');
-			}
-		},
-		error: function (jqXHR, textStatus, errorThrown) {  
-			alert(textStatus+" "+jqXHR.status)
-		}
-	});
-}
-function searchInactive(){
-	var token = localStorage.getItem("token");
-	var param = $('#paramInctive').val().trim();
-	if(param==""){
-		return;
-	}
-	tableInactiveHeader();
-	$.ajax({
-		url:'http://localhost:8443/api/users/search_inactive/'+param,
-		headers:{Authorization:"Bearer " + token},
-		type: 'GET',
-		dataType:'json',
-		crossDomain: true,
-		success:function(response){
-			for(var i=0; i<response.length; i++) {
-				var table =  $('#myInactiveTable');
-				user = response[i];
-				console.log(user.email);
-				table.append('<tr>'+
-								'<td>'+user.email+'</td>'+
-								'<td><button onclick="activateUser('+user.id+')" class="btn btn-default">Activate</button></td>'+
-							'</tr>');
-			}
-		},
-		error: function (jqXHR, textStatus, errorThrown) {  
-			alert(textStatus+" "+jqXHR.status)
-		}
-	});
-}
+
 function activateUser(id){
 	var token = localStorage.getItem("token");
 	console.log(id)
@@ -205,10 +144,12 @@ function currentUser(){
 		}
 	});
 }
+
 function logout(){
 	localStorage.removeItem("token");
-	window.location.replace("https://localhost:8443/login.html");
+	window.location.replace("http://localhost:8443/login.html");
 }
+
 function downloadCer(userName){
 	var token = localStorage.getItem("token");
 	console.log(token);
@@ -219,7 +160,9 @@ function downloadCer(userName){
 	xhr.responseType = 'blob';
 
 	xhr.onload = function(e) {
+		console.log("Is this called?")
 		if (this.status == 200) {
+			console.log("Are you there")
 			var blob = this.response;
 			console.log(blob);
 			var a = document.createElement('a');
