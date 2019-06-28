@@ -12,7 +12,7 @@ function fillTable(){
 	var token = localStorage.getItem("token");
 	tableHeader();
 	$.ajax({
-		url:'http://localhost:8443/api/users/active',
+		url:'https://localhost:8443/api/users/active',
 		headers:{Authorization:"Bearer " + token},
 		type: 'GET',
 		dataType:'json',
@@ -42,7 +42,7 @@ function fillInactiveTable(){
 	var token = localStorage.getItem("token");
 	tableInactiveHeader();
 	$.ajax({
-		url:'http://localhost:8443/api/users/inactive',
+		url:'https://localhost:8443/api/users/inactive',
 		headers:{Authorization:"Bearer " + token},
 		type: 'GET',
 		dataType:'json',
@@ -103,7 +103,7 @@ function activateUser(id){
 	$.ajax({
 		type: 'PUT',
 		headers:{"Authorization" :"Bearer " + token},
-        url: 'http://localhost:8443/api/users/activate/'+id,
+        url: 'https://localhost:8443/api/users/activate/'+id,
         dataType: 'json',
         crossDomain: true,
 		cache: false,
@@ -123,7 +123,7 @@ function currentUser(){
 	$.ajax({
 		type: 'PUT',
 		headers:{"Authorization" :"Bearer " + token},
-        url: 'http://localhost:8443/api/users/whoami',
+        url: 'https://localhost:8443/api/users/whoami',
         dataType: 'json',
         crossDomain: true,
 		cache: false,
@@ -147,7 +147,7 @@ function currentUser(){
 
 function logout(){
 	localStorage.removeItem("token");
-	window.location.replace("http://localhost:8443/login.html");
+	window.location.replace("https://localhost:8443/login.html");
 }
 
 function downloadCer(userName){
