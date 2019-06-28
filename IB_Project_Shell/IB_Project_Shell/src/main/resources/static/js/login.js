@@ -14,7 +14,7 @@ function login(){
 	$.ajax({
 		type: 'POST',
         contentType: 'application/json',
-        url: 'https://localhost:8443/api/auth/login',
+        url: 'http://localhost:8443/api/auth/login',
         data: JSON.stringify(data),
         dataType: 'json',
         crossDomain: true,
@@ -56,7 +56,7 @@ function register(){
 	$.ajax({
 		type: 'POST',
         contentType: 'application/json',
-        url: 'https://localhost:8443/api/users/register',
+        url: 'http://localhost:8443/api/users/register',
         data: JSON.stringify(data),
         dataType: 'json',
         crossDomain: true,

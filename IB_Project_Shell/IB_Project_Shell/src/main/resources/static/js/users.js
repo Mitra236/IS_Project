@@ -12,7 +12,7 @@ function fillTable(){
 	var token = localStorage.getItem("token");
 	tableHeader();
 	$.ajax({
-		url:'https://localhost:8443/api/users/active',
+		url:'http://localhost:8443/api/users/active',
 		headers:{Authorization:"Bearer " + token},
 		type: 'GET',
 		dataType:'json',
@@ -42,7 +42,7 @@ function fillInactiveTable(){
 	var token = localStorage.getItem("token");
 	tableInactiveHeader();
 	$.ajax({
-		url:'https://localhost:8443/api/users/inactive',
+		url:'http://localhost:8443/api/users/inactive',
 		headers:{Authorization:"Bearer " + token},
 		type: 'GET',
 		dataType:'json',
@@ -108,7 +108,7 @@ function searchActive(){
 	}
 	tableHeader();
 	$.ajax({
-		url:'https://localhost:8443/api/users/search_active/'+param,
+		url:'http://localhost:8443/api/users/search_active/'+param,
 		headers:{Authorization:"Bearer " + token},
 		type: 'GET',
 		dataType:'json',
@@ -137,7 +137,7 @@ function searchInactive(){
 	}
 	tableInactiveHeader();
 	$.ajax({
-		url:'https://localhost:8443/api/users/search_inactive/'+param,
+		url:'http://localhost:8443/api/users/search_inactive/'+param,
 		headers:{Authorization:"Bearer " + token},
 		type: 'GET',
 		dataType:'json',
@@ -164,7 +164,7 @@ function activateUser(id){
 	$.ajax({
 		type: 'PUT',
 		headers:{"Authorization" :"Bearer " + token},
-        url: 'https://localhost:8443/api/users/activate/'+id,
+        url: 'http://localhost:8443/api/users/activate/'+id,
         dataType: 'json',
         crossDomain: true,
 		cache: false,
@@ -184,7 +184,7 @@ function currentUser(){
 	$.ajax({
 		type: 'PUT',
 		headers:{"Authorization" :"Bearer " + token},
-        url: 'https://localhost:8443/api/users/whoami',
+        url: 'http://localhost:8443/api/users/whoami',
         dataType: 'json',
         crossDomain: true,
 		cache: false,

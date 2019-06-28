@@ -10,9 +10,11 @@ import ib.project.repository.UserRepository;
 
 @Service
 public class UserService implements UserServiceInterface {
-	
+
+
 	@Autowired
 	private UserRepository userRepository;
+
 
 	@Override
 	public User findById(Long id) {
@@ -29,11 +31,29 @@ public class UserService implements UserServiceInterface {
 		return userRepository.findAll();
 	}
 
-	
-
 	@Override
 	public User save(User user) {
-		return  userRepository.save(user);
+		return userRepository.save(user);
+	}
+
+	@Override
+	public List<User> findByActiveTrue() {
+		return userRepository.findByActiveTrue();
+	}
+
+	@Override
+	public List<User> findByActiveFalse() {
+		return userRepository.findByActiveFalse();
+	}
+
+	@Override
+	public List<User> findActiveByEmail(String email) {
+		return userRepository.findActiveByEmail(email);
+	}
+
+	@Override
+	public List<User> findInactiveByEmail(String email) {
+		return userRepository.findInactiveByEmail(email);
 	}
 
 }

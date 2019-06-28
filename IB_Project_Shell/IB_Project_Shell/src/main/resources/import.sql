@@ -1,8 +1,8 @@
-INSERT INTO users(email,password,certificate,active)VALUES('usera','$2y$10$2cdlxo9.FReyex2C1SrQa.k4WsJHA2rwCSH0CLPQDfRn5xJmGL7HO',NULL,true)
-INSERT INTO users(email,password,certificate,active)VALUES('userb','$2y$10$2cdlxo9.FReyex2C1SrQa.k4WsJHA2rwCSH0CLPQDfRn5xJmGL7HO',NULL,true)
-INSERT INTO users(email,password,certificate,active)VALUES('userc','$2y$10$2cdlxo9.FReyex2C1SrQa.k4WsJHA2rwCSH0CLPQDfRn5xJmGL7HO',NULL,false)
-INSERT INTO users(email,password,certificate,active)VALUES('userd','$2y$10$2cdlxo9.FReyex2C1SrQa.k4WsJHA2rwCSH0CLPQDfRn5xJmGL7HO',NULL,false)
-INSERT INTO users(email,password,certificate,active)VALUES('usere','$2y$10$2cdlxo9.FReyex2C1SrQa.k4WsJHA2rwCSH0CLPQDfRn5xJmGL7HO',NULL,false)
+INSERT INTO users(email,password,certificate,active)VALUES('usera','$2a$10$wdIczPJRv1EG7cOeCP3cJuJvWl8RjNRRLf0eN6R1Wsa8kacjWkHLS',NULL,true)
+INSERT INTO users(email,password,certificate,active)VALUES('userb','$2a$10$wdIczPJRv1EG7cOeCP3cJuJvWl8RjNRRLf0eN6R1Wsa8kacjWkHLS',NULL,true)
+INSERT INTO users(email,password,certificate,active)VALUES('userc','$2a$10$wdIczPJRv1EG7cOeCP3cJuJvWl8RjNRRLf0eN6R1Wsa8kacjWkHLS',NULL,false)
+INSERT INTO users(email,password,certificate,active)VALUES('userd','$2a$10$wdIczPJRv1EG7cOeCP3cJuJvWl8RjNRRLf0eN6R1Wsa8kacjWkHLS',NULL,false)
+INSERT INTO users(email,password,certificate,active)VALUES('usere','$2a$10$wdIczPJRv1EG7cOeCP3cJuJvWl8RjNRRLf0eN6R1Wsa8kacjWkHLS',NULL,false)
 
 
 
