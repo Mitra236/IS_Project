@@ -81,14 +81,7 @@ public class SignAndZip {
 			
 			GetImages();
 			createXMLDocument(directory);
-			
-			try {
-				zipIt();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
+
 			
 			Document document = loadDocument(IN_DOC);
 			
@@ -104,7 +97,13 @@ public class SignAndZip {
 			
 			saveDocument(document, OUT_DOC);
 			System.out.println("Signing of document done");
-			
+
+			try {
+				zipIt();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			
 		}
