@@ -33,7 +33,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     private CustomUserDetailService jwtUserDetailsService;
 
-    //Neautorizovani pristup zastcenim resursima
     @Autowired
     private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
@@ -44,8 +43,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     }
 
 
-    //Definisemo nacin autentifikacije
-    //Svaki
     @Autowired
     public void configureGlobal( AuthenticationManagerBuilder auth ) throws Exception {
         auth.userDetailsService( jwtUserDetailsService )
@@ -58,30 +55,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                //komunikacija izmedju klijenta i servera je stateless
+
                 .sessionManagement().sessionCreationPolicy( SessionCreationPolicy.STATELESS ).and()
-                //za neautorizovane zahteve posalji 401 gresku
                 .exceptionHandling().authenticationEntryPoint( restAuthenticationEntryPoint ).and()
                 .authorizeRequests()
-                //svim korisnicima dopusti da pristupe putanjama /auth/**
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/api/demo/**").permitAll()
                 .antMatchers("/api/users/register").permitAll()
                 .antMatchers("/api/users/activate/**").hasAuthority("ADMIN")
-                //svaki zahtev mora biti autorizovan
                 .anyRequest().authenticated().and()
-                //presretni svaki zahtev filterom
                 .addFilterBefore(new TokenAuthenticationFilter(tokenHelper, jwtUserDetailsService), BasicAuthenticationFilter.class)
 
         .csrf().disable();
     }
 
 
-
-    //Generalna bezbednost aplikacije
     @Override
     public void configure(WebSecurity web) throws Exception {
-        // TokenAuthenticationFilter ce ignorisati sve ispod navedene putanje
         web.ignoring().antMatchers(
                 HttpMethod.POST,
                 "/auth/login",
@@ -100,7 +90,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
                 
                 
             );
-//        "/**/*.jpg"
+
     }
 
 }

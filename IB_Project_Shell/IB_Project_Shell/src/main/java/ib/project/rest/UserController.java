@@ -1,6 +1,11 @@
 package ib.project.rest;
 
-import java.security.Principal;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.security.*;
+import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-
+import java.security.cert.Certificate;
 import ib.project.dto.UserDTO;
 import ib.project.model.Authority;
 import ib.project.model.User;
@@ -22,14 +27,18 @@ import ib.project.service.UserServiceInterface;
 @CrossOrigin("*")
 public class UserController {
 	
-	@Autowired
-	private UserServiceInterface userService;
-	
-	@Autowired
-	private AuthorityServiceInterface authorityService;
 
-	@Autowired
+	private UserServiceInterface userService;
+	private AuthorityServiceInterface authorityService;
 	PasswordEncoder passwordEncoder;
+
+	public UserController(UserServiceInterface userService, AuthorityServiceInterface authorityService, PasswordEncoder passwordEncoder){
+		this.userService = userService;
+		this.authorityService = authorityService;
+		this.passwordEncoder = passwordEncoder;
+	}
+
+
 
 	@GetMapping
 	public List<User> getAll() {
@@ -37,25 +46,25 @@ public class UserController {
     }
 
 
-	@GetMapping(value="/inactive")
+	@GetMapping(value = "/inactive")
 	public ResponseEntity<List<UserDTO>>getInactive(){
 		List<UserDTO> inactive = new ArrayList<>();
 		List<User> users = userService.findByActiveFalse();
 		for (User user : users) {
 			inactive.add(new UserDTO(user));
 		}
-		return new ResponseEntity<List<UserDTO>>(inactive,HttpStatus.OK);
+		return new ResponseEntity<>(inactive,HttpStatus.OK);
 	}
 
 
-	@GetMapping(value="/active")
+	@GetMapping(value = "/active")
 	public ResponseEntity<List<UserDTO>> getActive(){
 		List<UserDTO> active = new ArrayList<>();
 		List<User> users = userService.findByActiveTrue();
 		for (User user : users) {
 			active.add(new UserDTO(user));
 		}
-		return new ResponseEntity<List<UserDTO>>(active,HttpStatus.OK);
+		return new ResponseEntity<>(active,HttpStatus.OK);
 	}
 	
 	
@@ -66,30 +75,30 @@ public class UserController {
 		
 		User u = userService.findByEmail(userDTO.getEmail());
 		if(u!=null) {
-			return new ResponseEntity<UserDTO>(HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 		}
 		
 		
 		u = new User();
 		u.setEmail(userDTO.getEmail());
-		u.setPassword(userDTO.getPassword());
+		u.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 		u.setActive(false);
 		u.getUser_authorities().add(authority);
 		
 
 		u = userService.save(u);
-		return new ResponseEntity<UserDTO>(new UserDTO(u),HttpStatus.OK);
+		return new ResponseEntity<>(new UserDTO(u),HttpStatus.OK);
 	}
 
 	@PutMapping(value="/activate/{id}")
 	public ResponseEntity<UserDTO> activateUser(@PathVariable("id") Long id){
 		User user = userService.findById(id);
 		if(user == null) {
-			return new ResponseEntity<UserDTO>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		user.setActive(true);
 		user = userService.save(user);
-		return new ResponseEntity<UserDTO>(new UserDTO(user),HttpStatus.OK);
+		return new ResponseEntity<>(new UserDTO(user),HttpStatus.OK);
 	}
 
 
@@ -97,4 +106,5 @@ public class UserController {
 	public User user(Principal user) {
 		return this.userService.findByEmail(user.getName());
 	}
+
 }
