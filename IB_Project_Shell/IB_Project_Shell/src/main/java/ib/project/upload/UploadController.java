@@ -11,6 +11,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.io.ZipInputStream;
+import net.lingala.zip4j.model.FileHeader;
+import net.lingala.zip4j.unzip.UnzipUtil;
+
 
 @RestController
 @RequestMapping("api/uploadZip")
@@ -46,6 +52,12 @@ public class UploadController {
             System.out.println(UPLOADED_FOLDER);
             Files.write(path, bytes);
 
+            try {
+                unCompressPasswordProtectedFiles(UPLOADED_FOLDER + "images.zip");
+            }catch (ZipException e){
+                e.printStackTrace();
+            }
+
             redirectAttributes.addFlashAttribute("message",
                     "You successfully uploaded '" + file.getOriginalFilename() + "'");
 
@@ -61,6 +73,17 @@ public class UploadController {
     @GetMapping("/uploadStatus")
     public String uploadStatus() {
         return "uploadStatus";
+    }
+
+    private void unCompressPasswordProtectedFiles(String sourcePath) throws ZipException{
+        String destPath = UPLOADED_FOLDER;
+        System.out.println("Destination " + destPath);
+        ZipFile zipFile = new ZipFile(sourcePath);
+        // If it is encrypted then provide password
+        if(zipFile.isEncrypted()){
+            zipFile.setPassword("123");
+        }
+        zipFile.extractAll(destPath);
     }
 
 }

@@ -3,6 +3,7 @@ package xml.main;
 
 import java.io.BufferedInputStream;
 
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,8 +26,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
+
 
 
 import javax.xml.parsers.DocumentBuilder;
@@ -57,6 +57,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.model.ZipParameters;
+import net.lingala.zip4j.util.Zip4jConstants;
+
 
 
 public class SignAndZip {
@@ -66,7 +71,7 @@ public class SignAndZip {
 	private static final String KEY_STORE_FILE = "./data/miki.jks";
 	public static ArrayList<File> directory = new ArrayList<>();
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ZipException {
 		SignAndZip sign = new SignAndZip();
 		sign.testIt();
 		
@@ -77,7 +82,7 @@ public class SignAndZip {
 	      org.apache.xml.security.Init.init();
 	  }
 		
-		public void testIt() {
+		public void testIt() throws ZipException {
 			
 			GetImages();
 			createXMLDocument(directory);
@@ -98,12 +103,7 @@ public class SignAndZip {
 			saveDocument(document, OUT_DOC);
 			System.out.println("Signing of document done");
 
-			try {
-				zipIt();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			zipIt();
 			
 			
 		}
@@ -421,35 +421,54 @@ public class SignAndZip {
 			
 		}
 		
+	
+		public static void zipIt() throws ZipException {
+			ZipFile zipFile = new ZipFile("C:\\Users\\mitra\\Desktop\\images.zip");
+	
+		    ZipParameters zipParameters = new ZipParameters();
+		    
+	        zipParameters.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);
+	        zipParameters.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_ULTRA);
+	        zipParameters.setEncryptFiles(true); //Encryption flag set
+	        zipParameters.setEncryptionMethod(Zip4jConstants.ENC_METHOD_AES); //Setting encryption method to AES
+	        zipParameters.setAesKeyStrength(Zip4jConstants.AES_STRENGTH_256); //For both encryption and decryption
+	        zipParameters.setPassword("123"); // Setting password
+	        
+	        zipFile.addFiles(directory, zipParameters);
 		
-		
-		
-		
-		
-		
-		
-		public static void zipIt() throws IOException {
-			FileOutputStream fos = new FileOutputStream("C:\\Users\\mitra\\Desktop\\images.zip");
-			ZipOutputStream zipOut = new ZipOutputStream(fos);
-			
-			for (File file : directory) {
-				FileInputStream fis = new FileInputStream(file);
-				ZipEntry zipEntry = new ZipEntry(file.getName());
-				zipOut.putNextEntry(zipEntry);
-				
-				byte[] bytes = new byte[1024];
-				int length;
-				
-				while((length = fis.read(bytes)) >= 0) {
-					zipOut.write(bytes, 0, length);
-				}
-				
-				fis.close();
-			}
-			
-			zipOut.close();
-			fos.close();		
-
-			
 		}
+		
+//		public static void zipIt() throws ZipException {
+//
+////			FileOutputStream fos = new FileOutputStream("C:\\Users\\mitra\\Desktop\\images.zip");
+////			ZipOutputStream zipOut = new ZipOutputStream(fos);
+//			
+//			for (File file : directory) {
+//				
+////				FileInputStream fis = new FileInputStream(file);
+////				ZipEntry zipEntry = new ZipEntry(file.getName());
+//
+//		 //     ZipEntry zipParam = new ZipEntry(zipParameters.toString());
+//
+////				zipOut.putNextEntry(zipEntry);
+////				zipOut.putNextEntry(zipParam);
+//				
+//				
+//			//	byte[] bytes = new byte[1024];
+////				int length;
+////				
+////				while((length = fis.read(bytes)) >= 0) {
+////					zipOut.write(bytes, 0, length);
+////				}
+////				
+////				fis.close();
+//			}
+//			
+////			zipOut.close();
+////			fos.close();		
+//
+//			
+//		}
+		
+
 }
