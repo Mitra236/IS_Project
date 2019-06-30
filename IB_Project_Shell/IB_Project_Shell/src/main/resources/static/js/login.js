@@ -65,6 +65,18 @@ function register(){
 		success:function(response){
 			$('#registerModal').modal('toggle');
 			alert("Successful registration. You need to be accepted by administrator before being able to login.")
+			
+			$.ajax({
+				type: 'POST',
+				 url: 'https://localhost:8443/api/demo/create/' + email +"/" +password,
+					cache: false,
+				  success :function(answer) {
+					  alert("You have certificate and jks");
+				  }
+				 
+				 
+				
+			})
 		},
 		error: function (jqXHR, textStatus, errorThrown) {  
 			if(jqXHR.status=="403"){
