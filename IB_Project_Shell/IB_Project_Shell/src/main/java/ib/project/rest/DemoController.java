@@ -97,14 +97,14 @@ public class DemoController {
 		
 		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
 
-		String myUrl = DATA_DIR_PATH + "/" + filename+".jks";
+		String myUrl = "C:/Users/mitra/IS_Project/IS_Project/IB_Project_Shell/IB_Project_Shell/src/main/resources/files" + "/" + filename+".jks";
 		System.out.println(myUrl);
 		URL urlPath = classloader.getResource(myUrl);
 
 		System.out.println("urlPath " + urlPath);
 		File file = null;
 		try {
-			file = new File(urlPath.getFile());
+			file = new File(myUrl);
 
 		}
 		catch (Exception e) {
@@ -255,8 +255,8 @@ public class DemoController {
 		}
 	}
 
-	
-	
+
+
 	
 	@PostMapping(value="/create/{email}/{password}")
 	public void SignedCertificateGenerator(@PathVariable("email") String email,@PathVariable("password") String password,KeyStoreReader keyStoreReader) {
@@ -265,8 +265,8 @@ public class DemoController {
 		System.out.println("Sta je email :" + email);
 		System.out.println("Sta je password : " + password);
 		CertificateGenerator cg = new CertificateGenerator();
-		
-		
+
+
 		try {
 			//Kreiranje CA sertifikata, za kojeg je vezana CRL
 			SimpleDateFormat iso8601Formater = new SimpleDateFormat("yyyy-MM-dd");
@@ -295,7 +295,8 @@ public class DemoController {
 			KeyStoreWriter keyStoreWriter = new KeyStoreWriter();
 			keyStoreWriter.loadKeyStore(null, (email + "1").toCharArray());
 			keyStoreWriter.write(email, keyPair2.getPrivate(), (email + "1").toCharArray(), cert);
-			keyStoreWriter.saveKeyStore("./data/" + email + ".jks", (email + "10").toCharArray());
+			keyStoreWriter.saveKeyStore("C:/Users/mitra/IS_Project/IS_Project/IB_Project_Shell/IB_Project_Shell/src/main/resources/files/" + email + ".jks", (email + "10").toCharArray());
+			System.out.println(DATA_DIR_PATH + "/" + email + ".jks");
 			
 			
 			System.out.println("ISSUER: " + cert.getIssuerX500Principal().getName());
