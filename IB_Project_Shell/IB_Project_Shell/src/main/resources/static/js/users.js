@@ -31,7 +31,7 @@ function fillTable(){
 				console.log(user.email);
 				table.append('<tr>'+
 								'<td>'+user.email+'</td>'+
-								'<td><button onclick="downloadCer(\''+user.email+'\')" class="btn btn-default">Download</button></td>'+
+								'<td><button onclick="downloadCer(\''+user.email+'\')" class="btn btn-info">Download</button></td>'+
 							'</tr>');
 			}
 		},
@@ -63,7 +63,7 @@ function fillInactiveTable(){
 				console.log(user.email);
 				table.append('<tr>'+
 								'<td>'+user.email+'</td>'+
-								'<td><button onclick="activateUser('+user.id+')" class="btn btn-default">Activate</button></td>'+
+								'<td><button onclick="activateUser('+user.id+')" class="btn btn-info">Activate</button></td>'+
 							'</tr>');
 			}
 		},
@@ -78,7 +78,7 @@ function tableHeader(){
 	table.empty();
 	table.append('<tr>'+
 				'<th>Active Users</th>'+
-				'<th><button onclick="fillTable()" class="btn btn-default">Refresh</button></th>'+
+				'<th><button onclick="fillTable()" class="btn btn-info">Refresh</button></th>'+
 				'</tr>'+
 				'<tr>'+
 					'<th>Email</th>'+
@@ -92,7 +92,7 @@ function tableInactiveHeader(){
 	table.empty();
 	table.append('<tr>'+
 				'<th>Inactive Users</th>'+
-				'<th><button onclick="fillInactiveTable()" class="btn btn-default">Refresh</button></th>'+
+				'<th><button onclick="fillInactiveTable()" class="btn btn-info">Refresh</button></th>'+
 				'</tr>'+
 
 				'<tr>'+

@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <script src="js/images.js" type="text/javascript"></script>
+</head>
+
 <body>
 
 <h1>Spring Boot File upload</h1>
@@ -8,6 +13,20 @@
     <input type="file" name="file" /><br/><br/>
     <input type="submit" value="Upload" />
 </form>
-
+<script>               
+        var folder = "src/main/resources/files/images";
+    
+        $.ajax({
+            url : folder,
+            success: function (data) {
+                $(data).find("a").attr("href", function (i, val) {
+                    if( val.match(/\.(jpe?g|png|gif)$/) ) { 
+                        $("body").append( "<img src='" + val +"'>" );
+                        } 
+                    });
+                }
+            });
+        </script>
+<!-- <input type="file" accepts="image/*" multiple webkitdirectory /> -->
 </body>
 </html>
